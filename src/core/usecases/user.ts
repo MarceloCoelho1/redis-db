@@ -8,13 +8,16 @@ import { IUserRepository } from "../repositories/IUserRepository";
 import { IBcryptService } from "../services/IBcryptService";
 import { IJwtService } from "../services/IJwtService";
 import { ISessionRepository } from "../repositories/ISessionRepository";
+import { IRedisRepository } from "../repositories/IRedisRepository";
 
 export class UserUsecases {
     constructor(
         private userRepository: IUserRepository,
         private bcryptRepository: IBcryptService,
         private jwtRepository: IJwtService,
-        private sessionRepository: ISessionRepository
+        private sessionRepository: ISessionRepository,
+        private redisRepository: IRedisRepository
+
     ) { }
 
     async create(data: RegisterUserDTO, userAgnt: string): Promise<string> {
@@ -36,7 +39,7 @@ export class UserUsecases {
         const timeToExpires = 2
         const expiresAt = new Date()
         expiresAt.setHours(expiresAt.getHours() + timeToExpires)
-        const token = this.jwtRepository.sign({ userId: createdUser.id }, timeToExpires)
+        const token = this.jwtRepository.sign({ userId: createdUser.id })
 
         let sessionData = {
             userId: createdUser.id,
@@ -46,7 +49,7 @@ export class UserUsecases {
         }
 
         await this.sessionRepository.create(sessionData)
-
+        await this.redisRepository.create(createdUser.id)
         return token;
 
     }
@@ -68,7 +71,8 @@ export class UserUsecases {
         const timeToExpires = 2
         const expiresAt = new Date()
         expiresAt.setHours(expiresAt.getHours() + timeToExpires)
-        const token = this.jwtRepository.sign({ userId: user.id }, timeToExpires)
+
+        const token = this.jwtRepository.sign({ userId: user.id })
 
         let sessionData = {
             userId: user.id,
