@@ -7,9 +7,9 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 ## Use Cases
 
 ### **User Management**
-- [ ] **User Registration**: Allow new users to register.
-- [ ] **User Login**: Authenticate existing users.
-- [ ] **Tokens and Sessions**: Manage user sessions and authentication tokens.
+- [x] **User Registration**: Allow new users to register.
+- [x] **User Login**: Authenticate existing users.
+- [x] **Tokens and Sessions**: Manage user sessions and authentication tokens.
 
 ### **Database Management**
 - [ ] **Create Database**: Allow users to create a database by providing: name, host, port, and password.
