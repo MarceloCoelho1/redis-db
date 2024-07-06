@@ -2,10 +2,12 @@ import fastify from 'fastify'
 import { env } from './env'
 import { prisma } from './db/datasources/prismaClient' 
 import { userRoutes } from './infra/http/routes/userRoutes'
+import { redisRoutes } from './infra/http/routes/redisRoutes'
 
 const app = fastify()
 
 userRoutes(app)
+redisRoutes(app)
 
 const start = async () => {
   try {
