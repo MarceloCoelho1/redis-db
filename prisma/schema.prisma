@@ -39,7 +39,7 @@ model Database {
   host          String
   port          Int
   password      String
-  environmentId String
+  environmentId String      @unique
   environment   Environment @relation(fields: [environmentId], references: [id])
 
   @@map("databases")
@@ -48,7 +48,7 @@ model Database {
 model Environment {
   id        String     @id @default(uuid())
   name      String
-  redisId   String
+  redisId   String     @unique
   redis     Redis      @relation(fields: [redisId], references: [id])
   databases Database[]
 
@@ -57,10 +57,11 @@ model Environment {
 
 model Session {
   id        String   @id @default(uuid())
-  userId    String
+  userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
-  token     String
+  token     String   @unique
   expiresAt DateTime
+  userAgnt  String   @unique
 
   @@map("sessions")
 }
