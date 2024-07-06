@@ -26,4 +26,15 @@ export class PrismaSessionRepository implements ISessionRepository {
 
     return session
   }
+
+  async findByIdAndUser(userId: string, userAgnt: string): Promise<Session | null> {
+    const session = await prisma.session.findUnique({
+      where: {
+        userId,
+        userAgnt
+      }
+    })
+
+    return session
+  }
 }
