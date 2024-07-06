@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a proof of concept to clone some functionalities of Redis. The goal is to implementing basic functionalities of an in-memory key-value database.
+This project is a proof of concept to clone some functionalities of Redis. The goal is to implement the basic functionalities of an in-memory key-value database.
 
 ## Use Cases
 
