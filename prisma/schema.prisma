@@ -41,6 +41,7 @@ model Database {
   password      String
   environmentId String      @unique
   environment   Environment @relation(fields: [environmentId], references: [id])
+  secretKey     String      @unique
 
   @@map("databases")
 }
