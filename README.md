@@ -12,10 +12,9 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 - [x] **Tokens and Sessions**: Manage user sessions and authentication tokens.
 
 ### **Database Management**
-- [ ] **Create Database**: Allow users to create a database by providing: name, host, port, and password.
+- [x] **Create Database**: Allow users to create a database by providing: name, host, port, and password.
 - [x] **Create Environments**: Create different environments (development, testing, production).
-- [ ] **Environment-specific Databases**: Allow creation of one or more databases for each environment.
-- [ ] **Unique Database URL**: Generate a unique URL for database connection.
+- [x] **Environment-specific Databases**: Allow creation of one or more databases for each environment.
 
 ### **Advanced Data Types**
 - [ ] **Lists**: Implement lists and associated operations (LPUSH, RPUSH, LPOP, RPOP).
