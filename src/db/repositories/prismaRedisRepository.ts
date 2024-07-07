@@ -1,6 +1,8 @@
+import { Database } from "../../core/entities/database";
 import { Environment } from "../../core/entities/environment";
 import { Redis } from "../../core/entities/redis";
 import { IRedisRepository } from "../../core/repositories/IRedisRepository";
+import { databaseType } from "../../core/types/database";
 import { CreateEnvironmentDTO } from "../../infra/http/dtos/createEnvironment";
 import { prisma } from "../datasources/prismaClient";
 
@@ -48,6 +50,27 @@ export class PrismaRedisRepository implements IRedisRepository {
     })
 
     return redis
+  }
+
+  async createDatabase(data: databaseType): Promise<Database> {
+    const database = await prisma.database.create({
+      data
+    })
+
+    return database
+  }
+
+  async findEnvironmentById(id: string): Promise<Environment | null> {
+    const environment = await prisma.environment.findUnique({
+      where: {
+        id
+      },
+      include: {
+        databases: true
+      }
+    })
+
+    return environment
   }
 
 }
