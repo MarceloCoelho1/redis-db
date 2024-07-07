@@ -24,13 +24,36 @@ export class RedisUsecases {
     if(!user) {
       throw new UserNotExists()
     }
-    console.log(user)
     if(user.redis) {
       throw new RedisAlreadyExists()
     }
 
     return await this.redisRepository.create(user.id)
 
+  }
+
+  async createEnvironment(name: string, token: string) {
+    const decoded = this.jwtRepository.verify(token); 
+    if (!decoded) {
+      throw new InvalidToken()
+    }
+    const user = await this.userRepository.findById(decoded.userId)
+
+    if(!user) {
+      throw new UserNotExists()
+    }
+
+    const userRedis = await this.redisRepository.findRedisByUserId(user.id)
+
+    if(!userRedis) {
+      throw new Error("internal server Error!")
+    }
+
+    let data = {
+      name,
+      redisId: userRedis.id
+    }
+    return await this.redisRepository.createEnvironment(data)
   }
 
 

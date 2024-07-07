@@ -19,7 +19,7 @@ export class PrismaUserRepository implements IUserRepository {
     const user = await prisma.user.findUnique({
       where: { email },
       include: {
-        Session: true
+        Session: true,
       }
     })
   
@@ -30,7 +30,7 @@ export class PrismaUserRepository implements IUserRepository {
     const user = await prisma.user.findUnique({
       where: { id },
       include: {
-        Session: true
+        Session: true,
       }
     })
 
