@@ -38,7 +38,9 @@ model Database {
   name          String
   host          String
   port          Int
+  username      String
   password      String
+  isActive      Boolean     @default(true)
   environmentId String      @unique
   environment   Environment @relation(fields: [environmentId], references: [id])
   secretKey     String      @unique
