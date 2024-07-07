@@ -14,7 +14,7 @@ export const redisRoutes = (app: FastifyInstance): void => {
   const redisUsecases = new RedisUsecases(userRepository, jwtService, redisRepository)
   const redisController = new RedisController(redisUsecases)
 
-  app.post('/api/create', 
+  app.post('/api/create-environment', 
     { preHandler: [authMiddleware] },
     (req, reply) => redisController.createEnvironment(req, reply)
   );
