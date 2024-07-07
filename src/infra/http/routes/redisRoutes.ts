@@ -17,6 +17,9 @@ export const redisRoutes = (app: FastifyInstance): void => {
   app.post('/api/create-environment', 
     { preHandler: [authMiddleware] },
     (req, reply) => redisController.createEnvironment(req, reply)
-  );
-
+  )
+  app.post('/api/create/database',
+    { preHandler: [authMiddleware] },
+    (req, reply) => redisController.createDatabase(req, reply)
+  )
 }
