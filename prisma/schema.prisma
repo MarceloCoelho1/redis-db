@@ -40,6 +40,7 @@ model Database {
   port          Int
   username      String
   password      String
+  dbUrl         String      @unique
   isActive      Boolean     @default(true)
   environmentId String      @unique
   environment   Environment @relation(fields: [environmentId], references: [id])
