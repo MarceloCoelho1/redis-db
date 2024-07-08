@@ -19,7 +19,7 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 ### **Advanced Data Types**
 - [ ] **Lists**: Implement lists and associated operations (LPUSH, RPUSH, LPOP, RPOP).
 - [ ] **Sets**: Implement sets and associated operations (SADD, SREM, SMEMBERS).
-- [ ] **Hashes**: Implement hashes and associated operations (HSET, HGET, HDEL).
+- [x] **Hashes**: Implement hashes and associated operations (HSET, HGET, HDEL).
 
 ### **Security and Authentication**
 - [ ] **User Roles and Permissions**: Implement different levels of access and permissions for users.
