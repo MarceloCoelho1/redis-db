@@ -22,8 +22,8 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 - [x] **Hashes**: Implement hashes and associated operations (HSET, HGET, HDEL).
 
 ### **Security and Authentication**
-- [ ] **User Roles and Permissions**: Implement different levels of access and permissions for users.
-- [ ] **Encryption**: Implement encryption for sensitive data.
+- [x] **User Roles and Permissions**: Implement different levels of access and permissions for users.
+- [x] **Encryption**: Implement encryption for sensitive data.
 
 ### **API and Integration**
 - [x] **REST API**: Create a REST API to interact with the database.
