@@ -1,4 +1,6 @@
+import { RedisCache } from "../../db/datasources/inMemory";
 import { CreateDatabaseDTO } from "../../infra/http/dtos/createDatabaseDTO";
+import { SetRedisCacheDTO } from "../../infra/http/dtos/setRedisCacheDTO";
 import { InvalidToken } from "../errors/invalidToken";
 import { RedisAlreadyExists } from "../errors/redisAlreadyExists";
 import { UserNotExists } from "../errors/userNotExists";
@@ -11,7 +13,8 @@ export class RedisUsecases {
   constructor(
     private userRepository: IUserRepository,
     private jwtRepository: IJwtService,
-    private redisRepository: IRedisRepository
+    private redisRepository: IRedisRepository,
+    private redisCache: RedisCache
   ) { }
 
   async create(token: string) {
@@ -78,15 +81,38 @@ export class RedisUsecases {
     }
 
     const secretKey = uuidv4(); 
+    const urlDatabase = `${environment.name}://${data.username}:${data.password}@${data.host}:${data.port}/${data.name}`
 
     const databaseData = {
       ...data,
       secretKey,
-      isActive: true
+      isActive: true,
+      dbUrl: urlDatabase
     };
 
     return await this.redisRepository.createDatabase(databaseData);
   }
+
+  async setRedisCache(data: SetRedisCacheDTO) {
+    const decoded = this.jwtRepository.verify(data.token);
+    if (!decoded) {
+      throw new InvalidToken();
+    }
+
+    const user = await this.userRepository.findById(decoded.userId);
+    if (!user) {
+      throw new UserNotExists();
+    }
+
+    const userRedis = await this.redisRepository.findRedisByUserId(user.id);
+    if (!userRedis) {
+      throw new Error("Internal Server Error!");
+    }
+
+    return this.redisCache.set(data.secretKey, data.dbUrl, data.key, data.obj)
+
+  }
+
 
 
 }

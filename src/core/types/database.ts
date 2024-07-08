@@ -6,4 +6,5 @@ export type databaseType = {
   port: number;
   environmentId: string;
   secretKey: string;
+  dbUrl: string;
 }
