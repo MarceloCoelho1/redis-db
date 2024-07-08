@@ -25,13 +25,7 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 - [ ] **User Roles and Permissions**: Implement different levels of access and permissions for users.
 - [ ] **Encryption**: Implement encryption for sensitive data.
 
-### **Monitoring and Management**
-- [ ] **Logging**: Implement a logging system to monitor database operations and activities.
-- [ ] **Metrics**: Collect performance and usage metrics.
-- [ ] **Backup and Restore**: Implement functionalities for data backup and restoration.
-
 ### **API and Integration**
-- [ ] **REST API**: Create a REST API to interact with the database.
-- [ ] **Web Interface**: Implement a web interface for database management.
+- [x] **REST API**: Create a REST API to interact with the database.
 
 
