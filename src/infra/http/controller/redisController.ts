@@ -4,6 +4,7 @@ import { createEnvironmentSchema } from "../schemas/createEnvironmentSchema";
 import { UserNotExists } from "../../../core/errors/userNotExists";
 import { InvalidToken } from "../../../core/errors/invalidToken";
 import { createDatabaseSchema } from "../schemas/createDatabaseSchema";
+import { SetRedisCacheSchema } from "../schemas/setRedisCacheSchema";
 
 
 export class RedisController {
@@ -69,4 +70,51 @@ export class RedisController {
       }
     }
   }
+
+  async setRedisCache(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const authHeader = req.headers['authorization'];
+      const secretKey = req.headers['x-secret-key'] as string;
+      if(!secretKey) {
+        return reply.status(401).send({ message: 'Missing secret-key' });
+      }
+
+      if (!authHeader) {
+        return reply.status(401).send({ message: 'Missing token' });
+      }
+      const token = authHeader.split(' ')[1];
+
+
+      const result = SetRedisCacheSchema.safeParse(req.body);
+
+      if (!result.success) {
+        return reply.status(400).send({ errors: result.error.errors });
+      }
+
+      let dataDTO = {
+        secretKey,
+        token,
+        dbUrl: result.data.dbUrl,
+        key: result.data.key,
+        obj: {
+          ...result.data.value
+        }
+
+      }
+
+      const bool = await this.redisUsecases.setRedisCache(dataDTO);
+      reply.status(201).send({ "msg": "data inserted!" });
+
+    } catch (error) {
+      if (error instanceof UserNotExists) {
+        reply.status(error.statusCode).send({ error: error.message });
+      } else if (error instanceof InvalidToken) {
+        reply.status(error.statusCode).send({ error: error.message });
+      } else {
+        reply.status(500).send({ error: 'Internal Server Error' });
+      }
+    }
+  }
+
+  
 }
