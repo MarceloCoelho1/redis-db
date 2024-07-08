@@ -17,8 +17,6 @@ This project is a proof of concept to clone some functionalities of Redis. The g
 - [x] **Environment-specific Databases**: Allow creation of one or more databases for each environment.
 
 ### **Advanced Data Types**
-- [ ] **Lists**: Implement lists and associated operations (LPUSH, RPUSH, LPOP, RPOP).
-- [ ] **Sets**: Implement sets and associated operations (SADD, SREM, SMEMBERS).
 - [x] **Hashes**: Implement hashes and associated operations (HSET, HGET, HDEL).
 
 ### **Security and Authentication**
