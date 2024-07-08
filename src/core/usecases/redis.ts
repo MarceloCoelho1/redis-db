@@ -1,5 +1,6 @@
 import { RedisCache } from "../../db/datasources/inMemory";
 import { CreateDatabaseDTO } from "../../infra/http/dtos/createDatabaseDTO";
+import { GetRedisCacheDTO } from "../../infra/http/dtos/getRedisCacheDTO";
 import { SetRedisCacheDTO } from "../../infra/http/dtos/setRedisCacheDTO";
 import { InvalidToken } from "../errors/invalidToken";
 import { RedisAlreadyExists } from "../errors/redisAlreadyExists";
@@ -110,6 +111,26 @@ export class RedisUsecases {
     }
 
     return this.redisCache.set(data.secretKey, data.dbUrl, data.key, data.obj)
+
+  }
+
+  async getRedisCache(data: GetRedisCacheDTO) {
+    const decoded = this.jwtRepository.verify(data.token);
+    if (!decoded) {
+      throw new InvalidToken();
+    }
+
+    const user = await this.userRepository.findById(decoded.userId);
+    if (!user) {
+      throw new UserNotExists();
+    }
+
+    const userRedis = await this.redisRepository.findRedisByUserId(user.id);
+    if (!userRedis) {
+      throw new Error("Internal Server Error!");
+    }
+
+    return this.redisCache.get(data.secretKey, data.dbUrl, data.key)
 
   }
 

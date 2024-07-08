@@ -27,5 +27,5 @@ export const redisRoutes = (app: FastifyInstance): void => {
   app.post('/api/cache/set', { preHandler: [authMiddleware] },
     (req, reply) => redisController.setRedisCache(req, reply))
   app.post('/api/cache/get', { preHandler: [authMiddleware] },
-    (req, reply) => redisController.setRedisCache(req, reply))
+    (req, reply) => redisController.getRedisCache(req, reply))
 }
